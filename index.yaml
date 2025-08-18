@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  x3gallery:
+  - apiVersion: v2
+    appVersion: 3.34.2
+    created: "2025-08-18T20:49:04.977909544Z"
+    description: A Helm chart for X3Gallery photo
+    digest: b79c0c8c223edfae8b149a63d6727fd1690f475a8c9a34afbf185e7ba58707be
+    name: x3gallery
+    type: application
+    urls:
+    - https://ramuskay.github.io/hc-x3gallery/x3gallery-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-08-18T20:49:04.977047783Z"
