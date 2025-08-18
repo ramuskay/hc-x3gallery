@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-
-permissions:
-  contents: write
+    paths:
+      - 'x3gallery/**'
+      - '.github/workflows/publish-helm.yaml'
 
 jobs:
   build-and-publish:
@@ -21,30 +21,24 @@ jobs:
           version: v3.12.0
 
       - name: Package chart
-        run: helm package x3gallery
-
-      - name: Set up git for gh-pages
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          mkdir -p charts
+          helm package x3gallery -d charts
+
+      - name: Create or update index.yaml
+        run: |
+          if [ -f charts/index.yaml ]; then
+            helm repo index charts --url https://ramuskay.github.io/hc-x3gallery/ --merge charts/index.yaml
+          else
+            helm repo index charts --url https://ramuskay.github.io/hc-x3gallery/
+          fi
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          destination_dir: .
+          publish_dir: ./charts
           publish_branch: gh-pages
           keep_files: true
           force_orphan: false
           commit_message: "Publish Helm chart"
-          cname: ""
-
-      - name: Update Helm repo index
-        run: |
-          mkdir -p gh-pages
-          mv x3gallery-*.tgz gh-pages/
-          helm repo index gh-pages --url https://ramuskay.github.io/hc-x3gallery/
-          git add gh-pages/index.yaml
-          git commit -m "Update Helm repo index" || echo "No changes to commit"
-          git push origin gh-pages
