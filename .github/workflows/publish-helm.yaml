@@ -8,6 +8,9 @@ on:
       - 'x3gallery/**'
       - '.github/workflows/publish-helm.yaml'
 
+permissions:
+  contents: write
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
