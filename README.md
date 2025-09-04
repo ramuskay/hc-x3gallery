@@ -1,1 +1,1 @@
-# hc-x3gallery.
+# hc-x3gallery
