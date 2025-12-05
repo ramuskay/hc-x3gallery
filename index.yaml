@@ -3,12 +3,12 @@ entries:
   x3gallery:
   - apiVersion: v2
     appVersion: 3.34.2
-    created: "2025-12-05T19:43:01.756052829Z"
+    created: "2025-12-05T21:30:29.306377225Z"
     description: A Helm chart for X3Gallery photo
-    digest: 059500616b7c80fc176214a6ec553cec5a8db50de034a87fa528f6b437767868
+    digest: 174de41edec20b97c216bd0416cc04c2c5c00ef6d9ce2766e9ddf49340c2568e
     name: x3gallery
     type: application
     urls:
     - https://ramuskay.github.io/hc-x3gallery/x3gallery-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-05T19:43:01.755534203Z"
+generated: "2025-12-05T21:30:29.305867937Z"
