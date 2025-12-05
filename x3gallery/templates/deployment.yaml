@@ -27,10 +27,6 @@ spec:
       serviceAccountName: {{ include "x3gallery.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      volumes:
-      - name: content
-        persistentVolumeClaim:
-          claimName: {{ include "x3gallery.fullname" . }}-init-content
       initContainers:
       - command:
         - sh
