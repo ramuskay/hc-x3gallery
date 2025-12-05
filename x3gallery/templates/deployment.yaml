@@ -27,6 +27,28 @@ spec:
       serviceAccountName: {{ include "x3gallery.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - name: content
+        persistentVolumeClaim:
+          claimName: {{ include "x3gallery.fullname" . }}-init-content
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - |
+          echo "Checking if /data is empty..."
+          if [ -z "$(ls -A /data)" ]; then
+            echo "/data is empty — copying application files."
+            cp -R {{ .Values.persistence.mountPath }}* /data/
+          else
+            echo "/data is NOT empty — skipping copy."
+          fi
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: {{ .Chart.Name }}-init-content
+        volumeMounts:
+        - mountPath: /data
+          name: content
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
