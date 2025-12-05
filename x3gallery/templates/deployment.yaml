@@ -33,9 +33,9 @@ spec:
         - -c
         - |
           echo "Checking if /data is empty..."
-          if [ -z "$(ls -A /data)" ]; then
+          if [ -z "$(ls -A /data|grep -v 'lost+found')" ]; then
             echo "/data is empty — copying application files."
-            cp -R {{ .Values.persistence.mountPath }}* /data/
+            cp -Rp {{ .Values.persistence.mountPath }}* /data/
           else
             echo "/data is NOT empty — skipping copy."
           fi
